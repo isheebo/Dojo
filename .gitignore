@@ -1,0 +1,6 @@
+virtualenv
+__pycache__
+.coverage
+.noseids
+.idea
+.vscode
