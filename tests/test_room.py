@@ -12,3 +12,15 @@ class TestRoom(unittest.TestCase):
         self.assertEqual(self.room.members, [])
         self.assertTrue(self.room.is_empty())
         self.assertEqual(self.room.type_, "Room")
+
+
+class TestOffice(unittest.TestCase):
+    def setUp(self):
+        self.office = Office("blue")
+
+    def test_office_created(self):
+        self.assertEqual(self.office.name, "Blue")
+        self.assertEqual(self.office.max_capacity, 6)
+        self.assertEqual(self.office.members, [])
+        self.assertEqual(self.office.type_, "Office")
+        self.assertTrue(self.office.is_empty())
