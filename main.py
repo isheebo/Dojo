@@ -127,3 +127,9 @@ class App(cmd.Cmd):
         name = "{} {}".format(first_name, second_name)
 
         self.dojo.reallocate_person(name, new_room_name)
+
+    @docopt_cmd
+    def do_clear(self, _):
+        """usage: clear"""
+        """clear clears the screen"""
+        os.system("cls")
