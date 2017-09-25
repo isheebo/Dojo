@@ -48,3 +48,12 @@ class TestMainApp(unittest.TestCase):
         num_people = len(self.dojo.added_people)
         self.assertFalse(self.dojo.add_person("billy", "gates", "person_type", "n"))
         self.assertEqual(len(self.dojo.added_people), num_people)
+
+    def test_add_person_fails_if_name_already_exists(self):
+        num_people = len(self.dojo.added_people)
+        self.assertTrue(self.dojo.add_person("billy", "gates", "staff", "n"))
+        self.assertEqual(len(self.dojo.added_people), num_people + 1)
+        self.assertFalse(self.dojo.add_person("billy", "gates", "staff", "n"))
+        self.assertEqual(len(self.dojo.added_people), num_people + 1)
+        self.assertFalse(self.dojo.add_person("billy", "gates", "fellow", "y"))
+        self.assertEqual(len(self.dojo.added_people), num_people + 1)
