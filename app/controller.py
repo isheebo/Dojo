@@ -122,3 +122,11 @@ class Dojo:
                     cprint(f"{person.name} has not been allocated a living space as yet! create some rooms to add them",
                            color="yellow")
         return is_added
+
+    def available_offices(self):
+        """checks for office rooms. if they are available, returns a list of empty offices"""
+        available_offices = []
+        for room in self.all_created_rooms.values():
+            if room.type_ == "Office" and not room.is_full():
+                available_offices.append(room)
+        return available_offices
