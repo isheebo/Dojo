@@ -62,3 +62,26 @@ class TestMainApp(unittest.TestCase):
         num_people = len(self.dojo.added_people)
         self.assertFalse(self.dojo.add_person("Leo", "gets", "staff", "y"))
         self.assertEqual(len(self.dojo.added_people), num_people)
+
+    def test_add_staff_person_is_successful_for_right_person_type(self):
+        num_people = len(self.dojo.added_people)
+        self.assertTrue(self.dojo.add_person("billy", "gates", "staff", "n"))
+        self.assertEqual(len(self.dojo.added_people), num_people + 1)
+        staff_person = self.dojo.added_people["Billy gates"]
+        self.assertTrue(staff_person)
+        self.assertEqual(staff_person.name, "Billy gates")
+        self.assertEqual(staff_person.type_, "Staff")
+        self.assertIsNone(staff_person.office_name)
+        self.assertFalse(staff_person.is_allocated)
+
+    def test_add_fellow_person_is_successful_for_right_person_type(self):
+        num_people = len(self.dojo.added_people)
+        self.assertTrue(self.dojo.add_person("billy", "gates", "fellow", "y"))
+        self.assertEqual(len(self.dojo.added_people), num_people + 1)
+        fellow = self.dojo.added_people["Billy gates"]
+        self.assertTrue(fellow)
+        self.assertEqual(fellow.name, "Billy gates")
+        self.assertEqual(fellow.type_, "Fellow")
+        self.assertIsNone(fellow.livingspace_name)
+        self.assertIsNone(fellow.office_name)
+        self.assertFalse(fellow.is_allocated)
