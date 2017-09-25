@@ -186,4 +186,4 @@ class TestMainApp(unittest.TestCase):
         self.assertFalse(self.dojo.load_people("donal trump.txt"))
 
     def test_load_people_passes_for_given_filename(self):
-        self.assertTrue(self.dojo.load_people("files/names.txt"))
+        self.assertTrue(self.dojo.load_people("tests/files/names.txt"))
