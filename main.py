@@ -88,3 +88,9 @@ class App(cmd.Cmd):
 
         self.dojo.add_person(first_name, second_name,
                              person_type, wants_accommodation)
+
+    @docopt_cmd
+    def do_print_room(self, args):
+        """ Usage: print_room <room_name>"""
+        room_name = args["<room_name>"]
+        self.dojo.print_room(room_name)
