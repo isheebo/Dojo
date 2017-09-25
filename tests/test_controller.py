@@ -36,3 +36,10 @@ class TestMainApp(unittest.TestCase):
         self.assertEqual(len(self.dojo.names_of_all_created_rooms), num_rooms + 3)
         self.assertFalse(self.dojo.create_room("office", ["green", "fuchsia", "yellow"]))
         self.assertEqual(len(self.dojo.names_of_all_created_rooms), num_rooms + 3)
+
+    def test_create_room_passes_for_right_type_and_room_name(self):
+        num_rooms = len(self.dojo.names_of_all_created_rooms)
+        self.assertTrue(self.dojo.create_room("livingspace", ["kigali", "nairobi"]))
+        self.assertEqual(len(self.dojo.names_of_all_created_rooms), num_rooms + 2)
+        self.assertTrue(self.dojo.create_room("office", ["blue", "yellow", "red"]))
+        self.assertEqual(len(self.dojo.names_of_all_created_rooms), num_rooms + 5)
