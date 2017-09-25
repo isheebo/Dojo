@@ -17,3 +17,10 @@ class TestMainApp(unittest.TestCase):
         self.assertEqual(len(self.dojo.names_of_all_created_rooms), num_rooms + 1)
         self.assertFalse(self.dojo.create_room("livingspace", ["blue"]))
         self.assertEqual(len(self.dojo.names_of_all_created_rooms), num_rooms + 1)
+
+    def test_create_room_passes_for_single_room_input(self):
+        num_rooms = len(self.dojo.names_of_all_created_rooms)
+        self.assertTrue(self.dojo.create_room("office", ["blue"]))
+        self.assertEqual(len(self.dojo.names_of_all_created_rooms), num_rooms + 1)
+        self.assertTrue(self.dojo.create_room("livingspace", ["kigali"]))
+        self.assertEqual(len(self.dojo.names_of_all_created_rooms), num_rooms + 2)
