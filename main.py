@@ -103,3 +103,17 @@ class App(cmd.Cmd):
             self.dojo.print_allocations(filename)
         else:
             self.dojo.print_allocations()
+
+    @docopt_cmd
+    def do_print_unallocated(self, args):
+        """Usage: print_unallocated [<-o=filename>]"""
+        filename = args["<-o=filename>"]
+        if filename:
+            self.dojo.print_unallocated(filename)
+        else:
+            self.dojo.print_unallocated()
+
+    @docopt_cmd
+    def do_load_people(self, args):
+        """ Usage: load_people <filename>"""
+        self.dojo.load_people(args["<filename>"])
