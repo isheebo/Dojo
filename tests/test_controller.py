@@ -106,8 +106,8 @@ class TestMainApp(unittest.TestCase):
     def test_print_allocations_to_a_filename(self):
         self.assertTrue(self.dojo.create_room("office", ["yellow", "red"]))
         self.assertTrue(self.dojo.add_person("Leo", "gets", "staff", "n"))
-        self.assertTrue(self.dojo.print_allocations("tests/files/allocated.txt"))
-        self.assertTrue(os.path.exists("tests/files/allocated.txt"))
+        self.assertTrue(self.dojo.print_allocations("tests/files/generated/allocated.txt"))
+        self.assertTrue(os.path.exists("tests/files/generated/allocated.txt"))
 
     def test_print_unallocated_fails_if_no_people_have_been_added_yet(self):
         self.assertFalse(self.dojo.print_unallocated())
@@ -140,8 +140,8 @@ class TestMainApp(unittest.TestCase):
         self.assertTrue(self.dojo.add_person("mama", "mzee", "fellow", "y"))
         self.assertTrue(self.dojo.add_person("Augustus", "mwine", "fellow", "y"))
         self.assertTrue(self.dojo.add_person("Brian", "mao", "staff", "n"))
-        self.assertTrue(self.dojo.print_unallocated("tests/files/unallocated.txt"))
-        self.assertTrue(os.path.exists("tests/files/unallocated.txt"))
+        self.assertTrue(self.dojo.print_unallocated("tests/files/generated/unallocated.txt"))
+        self.assertTrue(os.path.exists("tests/files/generated/unallocated.txt"))
 
     def test_reallocate_person_fails_if_person_is_non_existent(self):
         self.assertTrue(self.dojo.create_room("office", ["blue"]))
