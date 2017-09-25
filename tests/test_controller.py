@@ -57,3 +57,8 @@ class TestMainApp(unittest.TestCase):
         self.assertEqual(len(self.dojo.added_people), num_people + 1)
         self.assertFalse(self.dojo.add_person("billy", "gates", "fellow", "y"))
         self.assertEqual(len(self.dojo.added_people), num_people + 1)
+
+    def test_add_staff_fails_if_wants_accommodation_is_true(self):
+        num_people = len(self.dojo.added_people)
+        self.assertFalse(self.dojo.add_person("Leo", "gets", "staff", "y"))
+        self.assertEqual(len(self.dojo.added_people), num_people)
