@@ -24,3 +24,14 @@ class TestFellow(unittest.TestCase):
         self.assertIsNone(self.fellow.office_name)
         self.assertIsNone(self.fellow.livingspace_name)
         self.assertFalse(self.fellow.is_allocated)
+
+
+class TestStaff(unittest.TestCase):
+    def setUp(self):
+        self.staff = Staff("Billy baggins")
+
+    def test_staff_is_created(self):
+        self.assertEqual(self.staff.name, "Billy Baggins")
+        self.assertFalse(self.staff.is_allocated)
+        self.assertIsNone(self.staff.office_name)
+        self.assertEqual(self.staff.type_, "Staff")
