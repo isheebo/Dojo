@@ -57,3 +57,16 @@ def docopt_cmd(func):
     fn.__doc__ = func.__doc__
     fn.__dict__.update(func.__dict__)
     return fn
+
+
+class App(cmd.Cmd):
+    os.system("cls")
+    prompt = "DojoRoomAllocator >>> "
+
+    font = Figlet(DEFAULT_FONT)
+    cprint("{}{}".format(font.renderText(
+        "Dojo\nRoom Allocator"), __doc__), color="green")
+
+    def __init__(self):
+        super(App, self).__init__()
+        self.dojo = Dojo()
