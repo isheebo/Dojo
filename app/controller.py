@@ -273,3 +273,25 @@ class Dojo:
         else:
             cprint(f"{name} cannot be reallocated to Room {room_name} since {room_name} is full", color="red")
         return is_reallocated
+
+    def load_people(self, filename):
+        """Loads people from a text file and adds them to the Dojo"""
+        has_loaded = False
+        fh = None
+        try:
+            fh = open(filename, mode="r", encoding="UTF-8")
+            for line in fh:
+                person_args = line.lower().split()
+                if len(person_args) > 3:
+                    self.add_person(person_args[0], person_args[1], person_args[2], person_args[3])
+                else:
+                    self.add_person(person_args[0], person_args[1], person_args[2], "n")
+        except OSError as err:
+            cprint(f"failed to load {filename}: {err}", color="red")
+        else:
+            has_loaded = True
+            cprint("All people have been loaded successfully from '{}'".format(filename), color="green")
+        finally:
+            if fh is not None:
+                fh.close()
+        return has_loaded
