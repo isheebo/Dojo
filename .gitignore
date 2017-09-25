@@ -4,3 +4,4 @@ __pycache__
 .noseids
 .idea
 .vscode
+tests/files/

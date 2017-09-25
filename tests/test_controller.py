@@ -108,3 +108,37 @@ class TestMainApp(unittest.TestCase):
         self.assertTrue(self.dojo.add_person("Leo", "gets", "staff", "n"))
         self.assertTrue(self.dojo.print_allocations("tests/files/allocated.txt"))
         self.assertTrue(os.path.exists("tests/files/allocated.txt"))
+
+    def test_print_unallocated_fails_if_no_people_have_been_added_yet(self):
+        self.assertFalse(self.dojo.print_unallocated())
+
+    def test_print_unallocated_people_fails_when_all_people_have_been_allocated_rooms(self):
+        self.assertTrue(self.dojo.create_room("office", ["blue"]))
+        self.assertTrue(self.dojo.create_room("livingspace", ["kigali"]))
+        self.assertTrue(self.dojo.add_person("bilbo", "gates", "fellow", "y"))
+        self.assertTrue(self.dojo.add_person("tai", "tai", "fellow", "y"))
+        self.assertFalse(self.dojo.print_unallocated())
+
+    def test_print_unallocated_if_no_rooms_have_been_created_yet(self):
+        self.assertTrue(self.dojo.add_person("bilbo", "gates", "fellow", "y"))
+        self.assertTrue(self.dojo.add_person("tai", "tai", "fellow", "y"))
+        self.assertFalse(self.dojo.print_unallocated())
+
+    def test_print_unallocated_is_successful_for_added_people_without_rooms(self):
+        self.assertTrue(self.dojo.create_room("office", ["blue"]))
+        self.assertTrue(self.dojo.add_person("bilbo", "gates", "fellow", "y"))
+        self.assertTrue(self.dojo.add_person("tai", "tai", "fellow", "y"))
+        self.assertTrue(self.dojo.add_person("mama", "mzee", "fellow", "y"))
+        self.assertTrue(self.dojo.add_person("Augustus", "mwine", "fellow", "y"))
+        self.assertTrue(self.dojo.add_person("Brian", "mao", "staff", "n"))
+        self.assertTrue(self.dojo.print_unallocated())
+
+    def test_print_unallocated_writes_to_file(self):
+        self.assertTrue(self.dojo.create_room("office", ["blue"]))
+        self.assertTrue(self.dojo.add_person("bilbo", "gates", "fellow", "y"))
+        self.assertTrue(self.dojo.add_person("tai", "tai", "fellow", "y"))
+        self.assertTrue(self.dojo.add_person("mama", "mzee", "fellow", "y"))
+        self.assertTrue(self.dojo.add_person("Augustus", "mwine", "fellow", "y"))
+        self.assertTrue(self.dojo.add_person("Brian", "mao", "staff", "n"))
+        self.assertTrue(self.dojo.print_unallocated("tests/files/unallocated.txt"))
+        self.assertTrue(os.path.exists("tests/files/unallocated.txt"))
