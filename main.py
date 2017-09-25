@@ -77,3 +77,14 @@ class App(cmd.Cmd):
         room_type = args["<room_type>"]
         room_names = args["<room_name>"]
         self.dojo.create_room(room_type, room_names)
+
+    @docopt_cmd
+    def do_add_person(self, args):
+        """Usage: add_person <first_name> <second_name> <FELLOW_or_STAFF> [<wants_accommodation>]"""
+        first_name = args["<first_name>"]
+        second_name = args["<second_name>"]
+        person_type = args["<FELLOW_or_STAFF>"]
+        wants_accommodation = args["<wants_accommodation>"]
+
+        self.dojo.add_person(first_name, second_name,
+                             person_type, wants_accommodation)
