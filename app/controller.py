@@ -130,3 +130,13 @@ class Dojo:
             if room.type_ == "Office" and not room.is_full():
                 available_offices.append(room)
         return available_offices
+
+    def available_livingspaces(self):
+        """ checks for created livingspace rooms within the dojo.
+        returns a list of empty and available livingspaces
+        """
+        livingspaces = []
+        for room in self.all_created_rooms.values():
+            if room.type_ == "LivingSpace" and not room.is_full():
+                livingspaces.append(room)
+        return livingspaces
