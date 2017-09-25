@@ -94,3 +94,12 @@ class App(cmd.Cmd):
         """ Usage: print_room <room_name>"""
         room_name = args["<room_name>"]
         self.dojo.print_room(room_name)
+
+    @docopt_cmd
+    def do_print_allocations(self, args):
+        """Usage: print_allocations [<-o=filename>]"""
+        filename = args["<-o=filename>"]
+        if filename:
+            self.dojo.print_allocations(filename)
+        else:
+            self.dojo.print_allocations()
