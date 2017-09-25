@@ -43,3 +43,8 @@ class TestMainApp(unittest.TestCase):
         self.assertEqual(len(self.dojo.names_of_all_created_rooms), num_rooms + 2)
         self.assertTrue(self.dojo.create_room("office", ["blue", "yellow", "red"]))
         self.assertEqual(len(self.dojo.names_of_all_created_rooms), num_rooms + 5)
+
+    def test_add_person_fails_for_incorrect_person_type(self):
+        num_people = len(self.dojo.added_people)
+        self.assertFalse(self.dojo.add_person("billy", "gates", "person_type", "n"))
+        self.assertEqual(len(self.dojo.added_people), num_people)
