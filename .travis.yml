@@ -1,0 +1,14 @@
+language: python
+python:
+  - "3.6.2"
+install: 
+  - pip install -r requirements.txt
+  - pip install coverage
+  - pip install coveralls
+  
+# command to run tests
+script: 
+  - nosetests --rednose --with-coverage --cover-package=app -v
+
+after_success:
+  - coveralls
