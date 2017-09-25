@@ -1,4 +1,5 @@
 import unittest
+import os
 from app.controller import Dojo
 
 
@@ -67,9 +68,9 @@ class TestMainApp(unittest.TestCase):
         num_people = len(self.dojo.added_people)
         self.assertTrue(self.dojo.add_person("billy", "gates", "staff", "n"))
         self.assertEqual(len(self.dojo.added_people), num_people + 1)
-        staff_person = self.dojo.added_people["Billy gates"]
+        staff_person = self.dojo.added_people["Billy Gates"]
         self.assertTrue(staff_person)
-        self.assertEqual(staff_person.name, "Billy gates")
+        self.assertEqual(staff_person.name, "Billy Gates")
         self.assertEqual(staff_person.type_, "Staff")
         self.assertIsNone(staff_person.office_name)
         self.assertFalse(staff_person.is_allocated)
@@ -78,9 +79,9 @@ class TestMainApp(unittest.TestCase):
         num_people = len(self.dojo.added_people)
         self.assertTrue(self.dojo.add_person("billy", "gates", "fellow", "y"))
         self.assertEqual(len(self.dojo.added_people), num_people + 1)
-        fellow = self.dojo.added_people["Billy gates"]
+        fellow = self.dojo.added_people["Billy Gates"]
         self.assertTrue(fellow)
-        self.assertEqual(fellow.name, "Billy gates")
+        self.assertEqual(fellow.name, "Billy Gates")
         self.assertEqual(fellow.type_, "Fellow")
         self.assertIsNone(fellow.livingspace_name)
         self.assertIsNone(fellow.office_name)
@@ -94,3 +95,16 @@ class TestMainApp(unittest.TestCase):
         self.assertTrue(self.dojo.create_room("office", ["blue"]))
         self.assertEqual(len(self.dojo.all_created_rooms), num_rooms + 1)
         self.assertTrue(self.dojo.print_room("blue"))
+
+    def test_print_allocations_fails_if_no_rooms_are_created_yet(self):
+        self.assertFalse(self.dojo.print_allocations())
+
+    def test_print_allocations_passes_if_rooms_are_present(self):
+        self.assertTrue(self.dojo.create_room("office", ["yellow", "red"]))
+        self.assertTrue(self.dojo.print_allocations())
+
+    def test_print_allocations_to_a_filename(self):
+        self.assertTrue(self.dojo.create_room("office", ["yellow", "red"]))
+        self.assertTrue(self.dojo.add_person("Leo", "gets", "staff", "n"))
+        self.assertTrue(self.dojo.print_allocations("tests/files/allocated.txt"))
+        self.assertTrue(os.path.exists("tests/files/allocated.txt"))
