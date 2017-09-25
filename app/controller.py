@@ -152,3 +152,22 @@ class Dojo:
             return False
         print(self.all_created_rooms[room_name])
         return True
+
+    def print_allocations(self, filename=None):
+        """ prints all rooms clearly showing the room
+            in which a particular person was added to
+        """
+        if len(self.all_created_rooms) == 0:
+            cprint("no rooms found", color="red")
+            return False
+
+        if filename is None:
+            for room in self.all_created_rooms.values():
+                # if not room.is_empty():
+                print(room)
+        else:
+            with open(filename, mode="w", encoding="UTF-8") as fh:
+                for room in self.all_created_rooms.values():
+                    # if not room.is_empty():
+                    fh.write("\n".join([str(room)]))
+        return True
