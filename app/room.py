@@ -1,4 +1,5 @@
 class Room:
+    """ Base Model for a room within the Dojo"""
     def __init__(self, name):
         self.name = name.title()
         self.members = []
@@ -16,3 +17,10 @@ class Room:
         return template.format(self.name, self.type_,
                                ", ".join([member.name for member in self.members]) if len(
                                    self.members) != 0 else "<-- No Members -->")
+
+
+class Office(Room):
+    """ Model for an Office within the Dojo"""
+    def __init__(self, name):
+        super(Office, self).__init__(name)
+        self.max_capacity = 6
