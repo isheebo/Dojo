@@ -134,6 +134,12 @@ class TestMainApp(unittest.TestCase):
         self.assertTrue(self.dojo.add_person("Brian", "mao", "staff", "n"))
         self.assertTrue(self.dojo.print_unallocated())
 
+    def test_print_unallocated_for_office_rooms(self):
+        self.assertTrue(self.dojo.create_room("livingspace", ["kigali"]))
+        self.assertTrue(self.dojo.add_person("martin", "riggs", "staff", "n"))
+        self.assertTrue(self.dojo.add_person("danny", "clover", "staff", "n"))
+        self.assertTrue(self.dojo.print_unallocated())
+
     def test_print_unallocated_writes_to_file_for_livingspaces(self):
         self.assertTrue(self.dojo.create_room("office", ["blue"]))
         self.assertTrue(self.dojo.add_person("bilbo", "gates", "fellow", "y"))
