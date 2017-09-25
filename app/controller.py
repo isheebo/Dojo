@@ -215,3 +215,61 @@ class Dojo:
             if unallocated_offices:
                 print(f"Those without an office are:- {', '.join(unallocated_offices)}")
         return True
+
+    def reallocate_person(self, name, new_room_name):
+        """ Reallocates a person to a room. useful when a person is added
+         without allocating them a room or for shifting people within rooms. """
+        name = name.title()
+        if name.title() not in self.names_of_all_added_people:
+            cprint(f"person with name '{name}' has not been added to the Dojo", color="red")
+            return False
+
+        room_name = new_room_name.title()
+        if room_name not in self.names_of_all_created_rooms:
+            cprint(f"room with name '{new_room_name}' has not yet been created", color="red")
+            return False
+
+        is_reallocated = False
+        person = self.added_people[name]
+        room = self.all_created_rooms[room_name]
+        if not room.is_full():
+            if room.type_ == "Office":
+                if person.office_name != room.name:
+                    is_reallocated = True
+                    cprint(f"{person.name} has been reallocated from {person.office_name} to {room.name}", color="blue")
+                    if person.office_name is not None:
+                        self.all_created_rooms[person.office_name].members.remove(person)
+                    person.office_name = room.name
+                    room.members.append(person)
+                else:
+                    cprint(f"{person.name} is already in Room '{room.name}'", color='yellow')
+                if person.type_ == "Staff" or (person.type_ == "Fellow" and not person.wants_accommodation):
+                    person.is_allocated = True
+
+            if room.type_ == "LivingSpace":
+                if person.type_ == "Staff":
+                    cprint("staff members cannot be accommodated at the Dojo", color="red")
+                    return False
+
+                if person.wants_accommodation:
+                    if person.livingspace_name != room.name:
+                        is_reallocated = True
+                        cprint("{} has been reallocated from {} to {}".format(person.name, person.livingspace_name,
+                                                                              room.name), color="blue")
+                        if person.livingspace_name is not None:
+                            self.all_created_rooms[person.livingspace_name].members.remove(person)
+                        person.livingspace_name = room.name
+                        room.members.append(person)
+                    else:
+                        cprint(f"{person.name} is already in Room '{room.name}'", color='yellow')
+                        return False
+
+                    if person.office_name:
+                        person.is_allocated = True
+                else:
+                    cprint(f"{person.name} never wanted to be accommodated in the Dojo "
+                           "and hence cannot be accommodated", color="red")
+                    return False
+        else:
+            cprint(f"{name} cannot be reallocated to Room {room_name} since {room_name} is full", color="red")
+        return is_reallocated
