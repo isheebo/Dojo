@@ -110,6 +110,7 @@ class TestMainApp(unittest.TestCase):
         self.assertTrue(os.path.exists("tests/files/generated/allocated.txt"))
 
     def test_print_unallocated_fails_if_no_people_have_been_added_yet(self):
+        self.assertTrue(self.dojo.create_room("office", ["blue"]))
         self.assertFalse(self.dojo.print_unallocated())
 
     def test_print_unallocated_people_fails_when_all_people_have_been_allocated_rooms(self):
@@ -133,7 +134,7 @@ class TestMainApp(unittest.TestCase):
         self.assertTrue(self.dojo.add_person("Brian", "mao", "staff", "n"))
         self.assertTrue(self.dojo.print_unallocated())
 
-    def test_print_unallocated_writes_to_file(self):
+    def test_print_unallocated_writes_to_file_for_livingspaces(self):
         self.assertTrue(self.dojo.create_room("office", ["blue"]))
         self.assertTrue(self.dojo.add_person("bilbo", "gates", "fellow", "y"))
         self.assertTrue(self.dojo.add_person("tai", "tai", "fellow", "y"))
@@ -143,11 +144,22 @@ class TestMainApp(unittest.TestCase):
         self.assertTrue(self.dojo.print_unallocated("tests/files/generated/unallocated.txt"))
         self.assertTrue(os.path.exists("tests/files/generated/unallocated.txt"))
 
+    def test_print_unallocated_writes_to_file_for_office_rooms(self):
+        self.assertTrue(self.dojo.create_room("livingspace", ["kigali"]))
+        self.assertTrue(self.dojo.add_person("martin", "riggs", "staff", "n"))
+        self.assertTrue(self.dojo.add_person("danny", "clover", "staff", "n"))
+        self.assertTrue(self.dojo.print_unallocated("tests/files/generated/unallocated.txt"))
+        self.assertTrue(os.path.exists("tests/files/generated/unallocated.txt"))
+
     def test_reallocate_person_fails_if_person_is_non_existent(self):
         self.assertTrue(self.dojo.create_room("office", ["blue"]))
         self.assertFalse(self.dojo.reallocate_person("Kibikindi Amos", "blue"))
 
-    def test_reallocate_person_fails_when_room_with_that_name_is_non_existent(self):
+    def test_reallocate_person_fails_when_room_with_the_given_name_is_unknown(self):
+        self.assertTrue(self.dojo.add_person("leo", "getz", "fellow", "y"))
+        self.assertFalse(self.dojo.reallocate_person("leo getz", "kigali"))
+
+    def test_reallocate_person_fails_when_person_is_already_in_that_room(self):
         self.assertTrue(self.dojo.create_room("office", ["blue"]))
         self.assertTrue(self.dojo.add_person("kibikindi", "amos", "staff", "n"))
         self.assertFalse(self.dojo.reallocate_person("Kibikindi Amos", "blue"))
