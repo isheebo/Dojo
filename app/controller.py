@@ -154,8 +154,9 @@ class Dojo:
         return True
 
     def print_allocations(self, filename=None):
-        """ prints all rooms clearly showing the room
-            in which a particular person was added to
+        """ prints all rooms clearly showing the room in which a particular
+        person was added to. If filename is specified, the allocations are
+        saved in that file; else they are printed to the standard output
         """
         if len(self.all_created_rooms) == 0:
             cprint("no rooms found", color="red")
@@ -170,4 +171,47 @@ class Dojo:
                 for room in self.all_created_rooms.values():
                     # if not room.is_empty():
                     fh.write("\n".join([str(room)]))
+        return True
+
+    def print_unallocated(self, filename=None):
+        """ prints unallocated people showing the type of rooms that they need to get.
+        if filename is specified, the information will be saved there else it is
+        printed to standard output
+        """
+        if len(self.all_created_rooms) == 0:
+            cprint("no rooms found", color="red")
+            return False
+
+        if len(self.added_people) == 0:
+            cprint("no people in the dojo yet!", color="red")
+            return False
+
+        unallocated = []
+        for person in self.added_people.values():
+            if not person.is_allocated:
+                unallocated.append(person)
+
+        if not unallocated:
+            cprint("all people in the dojo have been allocated rooms", color="blue")
+            return False
+
+        unallocated_offices = []
+        unallocated_livingspaces = []
+        for person in unallocated:
+            if person.type_ == "Staff" or (person.type_ == "Fellow" and person.office_name is None):
+                unallocated_offices.append(person.name)
+            if person.type_ == "Fellow" and person.wants_accommodation and person.livingspace_name is None:
+                unallocated_livingspaces.append(person.name)
+        if filename is not None:
+            with open(filename, mode="w", encoding="UTF-8") as fh:
+                if unallocated_livingspaces:
+                    fh.write("Those without a living space:\n{}\n\n".format(", ".join(unallocated_livingspaces)))
+                if unallocated_offices:
+                    fh.write("Those without an office:\n{}\n".format(", ".join(unallocated_offices)))
+
+        else:
+            if unallocated_livingspaces:
+                print(f"Those without a living space:- {', '.join(unallocated_livingspaces)}")
+            if unallocated_offices:
+                print(f"Those without an office are:- {', '.join(unallocated_offices)}")
         return True
