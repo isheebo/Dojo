@@ -181,3 +181,9 @@ class TestMainApp(unittest.TestCase):
         self.assertTrue(self.dojo.reallocate_person("mama mzee", "blue"))
         self.assertTrue(self.dojo.create_room("livingspace", ["kampala"]))
         self.assertTrue(self.dojo.reallocate_person("mama mzee", "kampala"))
+
+    def test_load_people_from_filename_fails_for_non_existent_filename(self):
+        self.assertFalse(self.dojo.load_people("donal trump.txt"))
+
+    def test_load_people_passes_for_given_filename(self):
+        self.assertTrue(self.dojo.load_people("files/names.txt"))
