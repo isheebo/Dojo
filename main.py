@@ -117,3 +117,13 @@ class App(cmd.Cmd):
     def do_load_people(self, args):
         """ Usage: load_people <filename>"""
         self.dojo.load_people(args["<filename>"])
+
+    @docopt_cmd
+    def do_reallocate_person(self, args):
+        """Usage: reallocate_person <first_name> <second_name> <new_room_name>"""
+        first_name = args["<first_name>"]
+        second_name = args["<second_name>"]
+        new_room_name = args["<new_room_name>"]
+        name = "{} {}".format(first_name, second_name)
+
+        self.dojo.reallocate_person(name, new_room_name)
