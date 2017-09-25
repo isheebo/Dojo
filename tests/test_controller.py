@@ -24,3 +24,8 @@ class TestMainApp(unittest.TestCase):
         self.assertEqual(len(self.dojo.names_of_all_created_rooms), num_rooms + 1)
         self.assertTrue(self.dojo.create_room("livingspace", ["kigali"]))
         self.assertEqual(len(self.dojo.names_of_all_created_rooms), num_rooms + 2)
+
+    def test_create_room_fails_for_multiple_rooms_if_type_unknown(self):
+        num_rooms = len(self.dojo.names_of_all_created_rooms)
+        self.assertFalse(self.dojo.create_room("type", ["blue", "orange", "yellow"]))
+        self.assertEqual(len(self.dojo.names_of_all_created_rooms), num_rooms)
