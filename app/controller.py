@@ -140,3 +140,15 @@ class Dojo:
             if room.type_ == "LivingSpace" and not room.is_full():
                 livingspaces.append(room)
         return livingspaces
+
+    def print_room(self, room_name):
+        """ prints a room specified by name:
+            :returns True if it has printed the room,
+             False otherwise
+        """
+        room_name = room_name.title()
+        if room_name not in self.names_of_all_created_rooms:
+            cprint(f"a room with name {room_name} doesn't exist in the Dojo", color="red")
+            return False
+        print(self.all_created_rooms[room_name])
+        return True
