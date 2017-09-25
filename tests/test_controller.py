@@ -85,3 +85,12 @@ class TestMainApp(unittest.TestCase):
         self.assertIsNone(fellow.livingspace_name)
         self.assertIsNone(fellow.office_name)
         self.assertFalse(fellow.is_allocated)
+
+    def test_print_room_fails_if_room_name_does_not_exist(self):
+        self.assertFalse(self.dojo.print_room("red"))
+
+    def test_print_room_passes_if_room_exists(self):
+        num_rooms = len(self.dojo.all_created_rooms)
+        self.assertTrue(self.dojo.create_room("office", ["blue"]))
+        self.assertEqual(len(self.dojo.all_created_rooms), num_rooms + 1)
+        self.assertTrue(self.dojo.print_room("blue"))
