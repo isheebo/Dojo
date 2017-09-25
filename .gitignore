@@ -4,4 +4,4 @@ __pycache__
 .noseids
 .idea
 .vscode
-tests/files/
+tests/files/generated
