@@ -142,3 +142,42 @@ class TestMainApp(unittest.TestCase):
         self.assertTrue(self.dojo.add_person("Brian", "mao", "staff", "n"))
         self.assertTrue(self.dojo.print_unallocated("tests/files/unallocated.txt"))
         self.assertTrue(os.path.exists("tests/files/unallocated.txt"))
+
+    def test_reallocate_person_fails_if_person_is_non_existent(self):
+        self.assertTrue(self.dojo.create_room("office", ["blue"]))
+        self.assertFalse(self.dojo.reallocate_person("Kibikindi Amos", "blue"))
+
+    def test_reallocate_person_fails_when_room_with_that_name_is_non_existent(self):
+        self.assertTrue(self.dojo.create_room("office", ["blue"]))
+        self.assertTrue(self.dojo.add_person("kibikindi", "amos", "staff", "n"))
+        self.assertFalse(self.dojo.reallocate_person("Kibikindi Amos", "blue"))
+
+    def test_reallocate_staff_person_fails_for_livingspace_room_type(self):
+        self.assertTrue(self.dojo.create_room("office", ["blue"]))
+        self.assertTrue(self.dojo.create_room("livingspace", ["kigali"]))
+        self.assertTrue(self.dojo.add_person("kibikindi", "amos", "staff", "n"))
+        self.assertFalse(self.dojo.reallocate_person("kibikindi amos", "kigali"))
+
+    def test_reallocate_person_fails_if_new_room_is_full(self):
+        self.assertTrue(self.dojo.create_room("livingspace", ["kampala"]))
+        self.assertTrue(self.dojo.add_person("bilbo", "gates", "fellow", "y"))
+        self.assertTrue(self.dojo.add_person("tai", "tai", "fellow", "y"))
+        self.assertTrue(self.dojo.add_person("mama", "mzee", "fellow", "y"))
+        self.assertTrue(self.dojo.add_person("augustus", "mwine", "fellow", "y"))
+        self.assertTrue(self.dojo.add_person("brian", "mao", "fellow", "y"))
+        self.assertFalse(self.dojo.reallocate_person("brian mao", "kampala"))
+
+    def test_reallocate_person_fails_for_a_person_who_never_wanted_accommodation(self):
+        self.assertTrue(self.dojo.create_room("office", ["blue"]))
+        self.assertTrue(self.dojo.add_person("bilbo", "gates", "fellow", "n"))
+        self.assertTrue(self.dojo.create_room("livingspace", ["kampala"]))
+        self.assertTrue(self.dojo.add_person("tai", "tai", "fellow", "y"))
+        self.assertFalse(self.dojo.reallocate_person("bilbo gates", "kampala"))
+
+    def test_reallocate_is_successful(self):
+        self.assertTrue(self.dojo.add_person("mama", "mzee", "fellow", "y"))
+        self.assertTrue(self.dojo.add_person("augustus", "mwine", "fellow", "y"))
+        self.assertTrue(self.dojo.create_room("office", ["blue"]))
+        self.assertTrue(self.dojo.reallocate_person("mama mzee", "blue"))
+        self.assertTrue(self.dojo.create_room("livingspace", ["kampala"]))
+        self.assertTrue(self.dojo.reallocate_person("mama mzee", "kampala"))
