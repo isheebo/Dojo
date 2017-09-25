@@ -5,10 +5,10 @@
 ![Python Version](https://img.shields.io/badge/Python-3.6-blue.svg)
 
 The Dojo Room Allocator is a simple utility that demonstrates how room allocation can be carried out at Andela Kenya's main facility, the Dojo. 
-It uses data structures (mainly dictionaries and lists) to staire and manipulate information that is provided unto it. Data storage for the mean time is non-persistent. Sqlite3 will be used to persist data in the near future.
+It uses data structures (mainly dictionaries and lists) to store and manipulate information that is provided unto it. Data storage for the mean time is non-persistent. A sqlite3 database will be used to persist data in the near future.
 
 ## Justification
-When a new Fellow joins Andela, they are assigned an office space and an optional living space if they choose to opt in. When a new Staff joins they are assigned an office space only. This simple application emulates a working model of how the rooms may be allocated.
+When a new Fellow joins Andela, they are assigned an office space and an optional living space if they choose to opt in. When a new Staff joins, they are assigned an office space only. This simple application emulates a working model of how office and living space rooms are allocated.
 
 ## Usage
 To get started, it is assumed you have [python 3.6](https://www.python.org) and [git](https://www.git-scm.com) installed. clone this repo by running `git clone https://github.com/isheebo/dojo.git`.
