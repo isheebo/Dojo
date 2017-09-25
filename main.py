@@ -70,3 +70,10 @@ class App(cmd.Cmd):
     def __init__(self):
         super(App, self).__init__()
         self.dojo = Dojo()
+
+    @docopt_cmd
+    def do_create_room(self, args):
+        """Usage: create_room <room_type>   <room_name>..."""
+        room_type = args["<room_type>"]
+        room_names = args["<room_name>"]
+        self.dojo.create_room(room_type, room_names)
