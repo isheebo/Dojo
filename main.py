@@ -137,7 +137,7 @@ class App(cmd.Cmd):
     @docopt_cmd
     def do_quit(self, _):
         """usage: quit"""
-        print("Thank you for using my app. see you soon")
+        cprint("Thank you for using my app. see you soon", color="cyan")
         exit()
 
 
