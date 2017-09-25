@@ -10,7 +10,7 @@ Usage:
 Options:
   help     Show this screen.
   clear    Clears the screen
-  quit     exits the application
+  quit     Exits the application
 """
 
 import cmd
@@ -133,3 +133,12 @@ class App(cmd.Cmd):
         """usage: clear"""
         """clear clears the screen"""
         os.system("cls")
+
+    @docopt_cmd
+    def do_quit(self, _):
+        """usage: quit"""
+        print("Thank you for using my app. see you soon")
+        exit()
+
+
+App().cmdloop()
